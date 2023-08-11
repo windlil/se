@@ -9,11 +9,17 @@ import inquirer from 'inquirer'
 
 const options:string[] = process.argv.slice(2)
 
+const searchAddress = [
+  'https://cn.bing.com/search?q=',
+  'https://www.google.com/search?q=',
+  'https://www.baidu.com/s?ie=utf-8&f=8&rsv_bp=1&rsv_idx=1&tn=baidu&wd=',
+]
+
+const searchMethod = searchAddress[currentAddress]
+
 undefinedCommand(options)
 
-let searchEngine = currentAddress
-
-function undefinedCommand(options: string[]) {
+async function undefinedCommand(options: string[]) {
   const optionsType = ['-h', '--help', '-u', '--use']
   if (options.length > 1) {
     console.log(logSymbols.warning, pc.red("unknown command! use -h to find help."))
@@ -25,22 +31,26 @@ function undefinedCommand(options: string[]) {
   }
 }
 
-// if (options.includes('-u') || options.includes('--use')) {
-//   inquirer.prompt([{
-//     type: 'list',
-//     choices: ["Google", "Bing", "Baidu"]
-//   }]).then((res) => {
-//     console.log(res)
-//     selectClose()
-//     process.exit()
-//   })
-// }
+if (options.includes('-u') || options.includes('--use')) {
+  await inquirer.prompt([{
+    type: "list",
+    name: 'choice',
+    message: 'Choose Search Engine',
+    choices: [
+      "Google", "Bing", "Baidu"
+    ]
+}],).then((res) => {
+
+    selectClose(res.choice)
+    process.exit()
+  })
+}
 
 
 if (options.includes('-h') || options.includes('--help')) {
   welcome('h')
   console.log(`
-ss          -    directly open default tab
+ss           -    directly open default tab
 se -u        -    select search engine 
 se --use     -    select search engine
 se -h        -    command list
@@ -51,8 +61,6 @@ se --help    -    command list
 }
 
 
-welcome()
-
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
@@ -61,7 +69,7 @@ const rl = readline.createInterface({
 ;(function () {
   rl.question(`\n${pc.bgGreen(pc.bold(` search: `))} `,async function(res){
     if (res) {
-      await open(searchEngine + res)
+      await open(searchMethod + res)
     } else {
       await open('https:')
     }
@@ -70,10 +78,8 @@ const rl = readline.createInterface({
   })
 })()
 
-function welcome(type: string = 'default') {
-  if (type === 'default') {
-
-  } else {
+function welcome(type: string) {
+  if (type === 'h') {
     console.log(`${pc.bold(pc.blue('@windlil/se'))} ${pc.dim('fast search and open browser v0.0.1')}`)
   }
 }
@@ -86,6 +92,6 @@ function close() {
   console.log('\n' + logSymbols.success, `${pc.bold(pc.yellow('success open!'))}`)
 }
 
-function selectClose() {
-  console.log('\n' + logSymbols.success, `${pc.bold(pc.yellow('success change search engine!'))}`)
+function selectClose(type: string) {
+  console.log('\n' + logSymbols.success, `${pc.bold(pc.yellow(`success select ${type} search engine!`))}`)
 }

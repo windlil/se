@@ -20,7 +20,7 @@ import inquirer from "inquirer";
 var options = process.argv.slice(2);
 undefinedCommand(options);
 var searchEngine = currentAddress;
-function undefinedCommand(options2) {
+async function undefinedCommand(options2) {
   const optionsType = ["-h", "--help", "-u", "--use"];
   if (options2.length > 1) {
     console.log(logSymbols.warning, pc.red("unknown command! use -h to find help."));
@@ -32,19 +32,24 @@ function undefinedCommand(options2) {
   }
 }
 if (options.includes("-u") || options.includes("--use")) {
-  inquirer.prompt([{
+  await inquirer.prompt([{
     type: "list",
-    choices: ["Google", "Bing", "Baidu"]
+    name: "choice",
+    message: "Choose Search Engine",
+    choices: [
+      "Google",
+      "Bing",
+      "Baidu"
+    ]
   }]).then((res) => {
-    console.log(res);
-    selectClose();
+    selectClose(res.choice);
     process.exit();
   });
 }
 if (options.includes("-h") || options.includes("--help")) {
   welcome("h");
   console.log(`
-ss          -    directly open default tab
+ss           -    directly open default tab
 se -u        -    select search engine 
 se --use     -    select search engine
 se -h        -    command list
@@ -53,7 +58,6 @@ se --help    -    command list
   info();
   process.exit();
 }
-welcome();
 var rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
@@ -70,9 +74,8 @@ ${pc.bgGreen(pc.bold(` search: `))} `, async function(res) {
     rl.close();
   });
 })();
-function welcome(type = "default") {
-  if (type === "default") {
-  } else {
+function welcome(type) {
+  if (type === "h") {
     console.log(`${pc.bold(pc.blue("@windlil/se"))} ${pc.dim("fast search and open browser v0.0.1")}`);
   }
 }
@@ -82,6 +85,6 @@ function info() {
 function close() {
   console.log("\n" + logSymbols.success, `${pc.bold(pc.yellow("success open!"))}`);
 }
-function selectClose() {
-  console.log("\n" + logSymbols.success, `${pc.bold(pc.yellow("success change search engine!"))}`);
+function selectClose(type) {
+  console.log("\n" + logSymbols.success, `${pc.bold(pc.yellow(`success change ${type} search engine!`))}`);
 }
