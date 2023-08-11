@@ -3,14 +3,13 @@
   "version": "0.0.2",
   "description": "",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "b": "tsup && npm link",
     "d": "tsup --watch"
   },
   "bin": {
-    "se": "dist/index.js",
-    "ss": "dist/ss.js"
+    "se": "dist/index.mjs",
+    "ss": "dist/ss.mjs"
   },
   "keywords": [],
   "author": "",

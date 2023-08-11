@@ -3,19 +3,28 @@ import open from 'open'
 import readline from 'readline'
 import process from 'process'
 import pc from 'picocolors'
-import { currentAddress } from './data'
 import logSymbols from 'log-symbols'
 import inquirer from 'inquirer'
+import fs from 'fs'
+import path from 'path'
+import url from 'url'
+
+const __filename = url.fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const dataPath = path.resolve(__dirname, './data.json')
+
+let currentAddress
+
+
 
 const options:string[] = process.argv.slice(2)
 
 const searchAddress = [
-  'https://cn.bing.com/search?q=',
   'https://www.google.com/search?q=',
+  'https://cn.bing.com/search?q=',
   'https://www.baidu.com/s?ie=utf-8&f=8&rsv_bp=1&rsv_idx=1&tn=baidu&wd=',
 ]
-
-const searchMethod = searchAddress[currentAddress]
 
 undefinedCommand(options)
 
@@ -39,10 +48,20 @@ if (options.includes('-u') || options.includes('--use')) {
     choices: [
       "Google", "Bing", "Baidu"
     ]
-}],).then((res) => {
-
-    selectClose(res.choice)
-    process.exit()
+}],).then(async (res) => {
+    const choice = res.choice
+    let current
+    if (choice === 'Google') {
+      current = 0
+    } else if (choice === 'Bing') {
+      current = 1
+    } else {
+      current = 2
+    }
+    await fs.writeFile(dataPath, `{ "current": ${current} }`,() => {
+      selectClose(choice)
+      process.exit(0)
+    })
   })
 }
 
@@ -66,17 +85,25 @@ const rl = readline.createInterface({
   output: process.stdout,
 })
 
-;(function () {
-  rl.question(`\n${pc.bgGreen(pc.bold(` search: `))} `,async function(res){
-    if (res) {
-      await open(searchMethod + res)
-    } else {
-      await open('https:')
-    }
-    close()
-    rl.close()
-  })
-})()
+if (options.length === 0) {
+  ;(function () {
+    rl.question(`\n${pc.bgGreen(pc.bold(` search: `))} `,async function(target){
+      if (target) {
+        await fs.readFile(dataPath, (err, res) => {
+          const data = res.toString()
+          currentAddress = JSON.parse(data).current ?? 0
+          console.log(currentAddress)
+          const searchMethod = searchAddress[currentAddress]
+          open(searchMethod + target)
+        })
+      } else {
+        await open('https:')
+      }
+      close()
+      rl.close()
+    })
+  })()
+}
 
 function welcome(type: string) {
   if (type === 'h') {
