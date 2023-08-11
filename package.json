@@ -1,6 +1,6 @@
 {
   "name": "@windlil/se",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "d": "tsup --watch"
   },
   "bin": {
-    "se": "dist/index.mjs",
+    "se": "dist/se.mjs",
     "ss": "dist/ss.mjs"
   },
   "files": [
