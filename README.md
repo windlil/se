@@ -1,6 +1,8 @@
 # se
 ⚡A CLI to help you fast search and open browser.
 
+![img](https://github.com/windlil/imgSave/blob/main/se.gif)
+
 ## Installation
 ```bash
 npm i @windlil/se -g
