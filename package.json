@@ -1,0 +1,30 @@
+{
+  "name": "@windlil/se",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "b": "tsup && npm link",
+    "d": "tsup --watch"
+  },
+  "bin": {
+    "se": "dist/index.js",
+    "ss": "dist/ss.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/inquirer": "^9.0.3",
+    "@types/node": "^20.4.9",
+    "tsup": "^7.2.0",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "inquirer": "^9.2.10",
+    "log-symbols": "^5.1.0",
+    "open": "^9.1.0",
+    "picocolors": "^1.0.0"
+  }
+}
