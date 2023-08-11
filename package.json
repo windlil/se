@@ -1,6 +1,6 @@
 {
   "name": "@windlil/se",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -11,6 +11,9 @@
     "se": "dist/index.mjs",
     "ss": "dist/ss.mjs"
   },
+  "files": [
+    "dist"
+  ],
   "keywords": [],
   "author": "",
   "license": "ISC",

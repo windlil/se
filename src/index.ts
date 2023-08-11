@@ -85,22 +85,34 @@ const rl = readline.createInterface({
   output: process.stdout,
 })
 
+
+
+let currentMethodName, searchMethod
+
 if (options.length === 0) {
-  ;(function () {
-    rl.question(`\n${pc.bgGreen(pc.bold(` search: `))} `,async function(target){
-      if (target) {
-        await fs.readFile(dataPath, (err, res) => {
-          const data = res.toString()
-          currentAddress = JSON.parse(data).current ?? 0
-          console.log(currentAddress)
-          const searchMethod = searchAddress[currentAddress]
-          open(searchMethod + target)
-        })
+  ;(async () => {
+    fs.readFile(dataPath, (_, res) => {
+      const data = res.toString()
+      currentAddress = JSON.parse(data).current ?? 0
+      searchMethod = searchAddress[currentAddress]
+      if (currentAddress === 0) {
+        currentMethodName = 'Google'
+      } else if (currentAddress === 1) {
+        currentMethodName = 'Bing'
       } else {
-        await open('https:')
+        currentMethodName = 'Baidu'
       }
-      close()
-      rl.close()
+      ;(function () {
+        rl.question(`\n${pc.bgGreen(pc.bold(` ${currentMethodName}: `))} `,async function(target){
+          if (target) {
+            open(searchMethod + target)
+          } else {
+            await open('https:')
+          }
+          close()
+          rl.close()
+        })
+      })()
     })
   })()
 }
