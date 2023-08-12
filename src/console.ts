@@ -1,9 +1,10 @@
 import pc from 'picocolors'
 import logSymbols from 'log-symbols'
+import { getVersion } from './getVersion'
 
 export function welcome(type: string) {
   if (type === 'h') {
-    console.log(`${pc.bold(pc.blue('@windlil/se'))} ${pc.dim('fast search and open browser v0.0.1')}`)
+    console.log(`${pc.bold(pc.blue('@windlil/se'))} ${pc.dim(`fast search and open browser v${getVersion()}`)}`)
   }
 }
 
