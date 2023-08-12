@@ -25,7 +25,7 @@ ss go to github
 # search  'go to github' and open browser .
 ```
 
-## `ss -u`
+## `se -u`
 ```bash
 se -u
 
