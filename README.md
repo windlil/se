@@ -20,6 +20,9 @@ se
 ss
 
 # directly open default browser new tab 
+
+ss go to github
+# search  'go to github' and open browser .
 ```
 
 ## `ss -u`
