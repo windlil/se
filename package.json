@@ -1,7 +1,11 @@
 {
   "name": "@windlil/se",
-  "version": "0.0.5",
-  "description": "",
+  "version": "0.0.6",
+  "description": "A CLI to help you fast search and open browser.",
+  "keywords": ["nodejs", "typescript", "cli", "browser"],
+  "repository": {
+    "url": "https://github.com/windlil/se"
+  },
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -15,7 +19,6 @@
   "files": [
     "dist"
   ],
-  "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
