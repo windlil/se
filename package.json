@@ -1,6 +1,6 @@
 {
   "name": "@windlil/se",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "A CLI to help you fast search and open browser.",
   "keywords": ["nodejs", "typescript", "cli", "browser"],
   "repository": {
